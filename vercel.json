@@ -2,13 +2,13 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
   "functions": {
-    "backend/app/main.py": {
+    "api/index.py": {
       "maxDuration": 30,
       "excludeFiles": "{tests/**,__tests__/**,**/*.test.py,**/test_*.py,fixtures/**,__fixtures__/**,testdata/**,data/**,__pycache__/**}"
     }
   },
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "/backend/app/main.py" },
+    { "source": "/api/(.*)", "destination": "/api/index.py" },
     { "source": "/", "destination": "/frontend/index.html" },
     { "source": "/((?!api/).*)", "destination": "/frontend/$1" }
   ]
