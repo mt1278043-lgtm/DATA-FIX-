@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>DataFix AI — Turn Messy Data Into Reliable Insights</title>
+<meta name="description" content="Upload a dataset, detect hidden data-quality problems, clean your data, and discover insights in minutes." />
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/animations.css" />
+<link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+
+<div id="loadingScreen">
+  <img class="ls-logo" src="assets/logo.svg" alt="" />
+  <div class="ls-text">Preparing your data workspace…</div>
+</div>
+
+<nav class="navbar">
+  <div class="container">
+    <a href="index.html" class="brand"><span class="logo-wrap"><img src="assets/logo.svg" width="28" height="28" alt="" /></span> DataFix AI</a>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html#features">Features</a>
+      <a href="index.html#how-it-works">How It Works</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="login.html">Sign In</a>
+    </div>
+    <div class="nav-actions">
+      <a href="login.html" class="btn btn-primary btn-sm">Get Started</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <canvas id="heroCanvas"></canvas>
+  <div class="container">
+    <div>
+      <span class="eyebrow-pill glass"><span class="dot"></span> Data quality, checked automatically</span>
+      <h1 data-split>Turn Messy Data Into Reliable Insights.</h1>
+      <p class="subtitle">Upload your dataset, detect hidden data-quality problems, clean your data, and discover meaningful insights in minutes.</p>
+      <div class="hero-actions">
+        <a href="login.html" class="btn btn-primary">Analyze Your Data <i class="fa-solid fa-arrow-right"></i></a>
+        <a href="projects.html" class="btn btn-secondary">Go to Workspace</a>
+      </div>
+    </div>
+
+    <div class="hero-visual glass">
+      <div class="hero-visual-head">
+        <span class="label">Dataset Analysis</span>
+        <span class="badge-live"><span class="dot"></span> scanning</span>
+      </div>
+      <div class="hv-stats">
+        <div class="hv-stat"><div class="hv-label">Rows</div><div class="hv-value"><span data-count="12540">0</span></div></div>
+        <div class="hv-stat"><div class="hv-label">Columns</div><div class="hv-value"><span data-count="18">0</span></div></div>
+        <div class="hv-stat warn"><div class="hv-label">Missing Values</div><div class="hv-value"><span data-count="143">0</span></div></div>
+        <div class="hv-stat bad"><div class="hv-label">Duplicates</div><div class="hv-value"><span data-count="27">0</span></div></div>
+      </div>
+      <div class="hv-score-row">
+        <div class="hv-ring-wrap">
+          <svg viewBox="0 0 74 74">
+            <defs>
+              <linearGradient id="hvGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#3b82f6"/>
+                <stop offset="1" stop-color="#2dd4bf"/>
+              </linearGradient>
+            </defs>
+            <circle class="hv-ring-bg" cx="37" cy="37" r="32"></circle>
+            <circle class="hv-ring-fill" id="hvRingFill" cx="37" cy="37" r="32"></circle>
+          </svg>
+          <div class="hv-ring-label"><span data-count="82">0</span>%</div>
+        </div>
+        <div class="hv-score-copy">
+          <div class="hv-title">Data Health: Good</div>
+          <div class="hv-sub">3 issue types found — 18 outliers flagged</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="section" id="features">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <h2>Everything you need to trust your data</h2>
+      <p>DataFix AI scans every column the moment you upload, so you know exactly what needs fixing before you build on top of it.</p>
+    </div>
+    <div class="feature-grid" data-reveal-group>
+
+      <div class="feature-card glass" data-reveal>
+        <div class="feature-icon"><i class="fa-solid fa-broom"></i></div>
+        <h3>Automated Data Cleaning</h3>
+        <p>One-click fixes for the most common problems — no scripting or spreadsheet formulas required.</p>
+      </div>
+
+      <div class="feature-card glass" data-reveal>
+        <div class="feature-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
+        <h3>Missing Value Detection</h3>
+        <p>Every blank, null, and placeholder is located and counted, column by column.</p>
+      </div>
+
+      <div class="feature-card glass" data-reveal>
+        <div class="feature-icon"><i class="fa-solid fa-clone"></i></div>
+        <h3>Duplicate Detection</h3>
+        <p>Exact duplicate rows are flagged instantly so they don't skew your totals.</p>
+      </div>
+
+      <div class="feature-card glass" data-reveal>
+        <div class="feature-icon"><i class="fa-solid fa-chart-line"></i></div>
+        <h3>Outlier Detection</h3>
+        <p>The IQR method surfaces values that fall well outside a column's typical range.</p>
+      </div>
+
+      <div class="feature-card glass" data-reveal>
+        <div class="feature-icon"><i class="fa-solid fa-check-double"></i></div>
+        <h3>Data Type Validation</h3>
+        <p>Columns are checked against their inferred type so text-in-a-number-column errors don't slip through.</p>
+      </div>
+
+      <div class="feature-card glass" data-reveal>
+        <div class="feature-icon"><i class="fa-solid fa-tags"></i></div>
+        <h3>Category Standardization</h3>
+        <p>Merge "USA", "usa", and "U.S.A" into one consistent label automatically.</p>
+      </div>
+
+      <div class="feature-card glass" data-reveal>
+        <div class="feature-icon"><i class="fa-solid fa-chart-simple"></i></div>
+        <h3>Statistical Analysis</h3>
+        <p>Mean, median, standard deviation, and quartiles calculated for every numeric column.</p>
+      </div>
+
+      <div class="feature-card glass" data-reveal>
+        <div class="feature-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+        <h3>AI Insights</h3>
+        <p>Ask questions in plain English and get answers grounded in your actual data.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="section" id="how-it-works">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <h2>How it works</h2>
+      <p>From raw file to clean, analyzed dataset in four steps.</p>
+    </div>
+    <div class="process-rail" data-reveal-group>
+      <div class="process-step glass" data-reveal-scale>
+        <div class="num"><i class="fa-solid fa-upload"></i></div>
+        <h3>Upload Dataset</h3>
+        <p>Drag in a CSV or Excel file, or start from a built-in demo dataset.</p>
+      </div>
+      <div class="process-step glass" data-reveal-scale>
+        <div class="num"><i class="fa-solid fa-magnifying-glass-chart"></i></div>
+        <h3>Scan Data</h3>
+        <p>DataFix AI infers column types and checks every row for missing values, duplicates, and outliers.</p>
+      </div>
+      <div class="process-step glass" data-reveal-scale>
+        <div class="num"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+        <h3>Fix Problems</h3>
+        <p>Apply guided cleaning actions and watch your data health score improve in real time.</p>
+      </div>
+      <div class="process-step glass" data-reveal-scale>
+        <div class="num"><i class="fa-solid fa-download"></i></div>
+        <h3>Export Results</h3>
+        <p>Download the cleaned dataset and a full data-quality report.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="pricing">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <h2>Simple, transparent pricing</h2>
+      <p>Start free. Upgrade when you're analyzing data every day.</p>
+    </div>
+    <div class="pricing-grid" data-reveal-group>
+      <div class="price-card glass" data-reveal>
+        <span class="plan-tag">Starter</span>
+        <div class="price">$0<span>/month</span></div>
+        <p class="plan-desc">For trying DataFix AI on a handful of datasets.</p>
+        <ul>
+          <li><span class="check"><i class="fa-solid fa-check"></i></span> Up to 5 datasets / month</li>
+          <li><span class="check"><i class="fa-solid fa-check"></i></span> Files up to 5 MB</li>
+          <li><span class="check"><i class="fa-solid fa-check"></i></span> Core quality checks</li>
+          <li><span class="check"><i class="fa-solid fa-check"></i></span> CSV export</li>
+        </ul>
+        <a href="login.html" class="btn btn-secondary btn-block">Get Started</a>
+      </div>
+      <div class="price-card glass featured" data-reveal>
+        <span class="plan-tag">Pro</span>
+        <div class="price">$29<span>/month</span></div>
+        <p class="plan-desc">For analysts cleaning data every week.</p>
+        <ul>
+          <li><span class="check"><i class="fa-solid fa-check"></i></span> Unlimited datasets</li>
+          <li><span class="check"><i class="fa-solid fa-check"></i></span> Files up to 50 MB</li>
+          <li><span class="check"><i class="fa-solid fa-check"></i></span> AI Data Assistant</li>
+          <li><span class="check"><i class="fa-solid fa-check"></i></span> Full report generator</li>
+          <li><span class="check"><i class="fa-solid fa-check"></i></span> Correlation & trend charts</li>
+        </ul>
+        <a href="login.html" class="btn btn-primary btn-block">Get Started</a>
+      </div>
+      <div class="price-card glass" data-reveal>
+        <span class="plan-tag">Team</span>
+        <div class="price">$99<span>/month</span></div>
+        <p class="plan-desc">For teams standardizing data quality across projects.</p>
+        <ul>
+          <li><span class="check"><i class="fa-solid fa-check"></i></span> Everything in Pro</li>
+          <li><span class="check"><i class="fa-solid fa-check"></i></span> Shared workspaces</li>
+          <li><span class="check"><i class="fa-solid fa-check"></i></span> Audit-ready reports</li>
+          <li><span class="check"><i class="fa-solid fa-check"></i></span> Priority support</li>
+        </ul>
+        <a href="login.html" class="btn btn-secondary btn-block">Get Started</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-brand"><img src="assets/logo.svg" width="22" height="22" alt="" /> DataFix AI © 2026</div>
+    <div class="footer-links">
+      <a href="index.html#features">Features</a>
+      <a href="index.html#how-it-works">How It Works</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="login.html">Get Started</a>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="js/csv-parser.js"></script>
+<script src="js/analyzer.js"></script>
+<script src="js/cleaner.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/animations.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

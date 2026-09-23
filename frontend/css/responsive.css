@@ -1,0 +1,74 @@
+/* ==========================================================================
+   DataFix AI — Responsive (v2)
+   Desktop-first overrides. Mobile also strips heavy effects (custom
+   cursor, particle canvas, extra shadows) regardless of reduced-motion,
+   purely for performance — see the JS-driven .no-fancy class too.
+   ========================================================================== */
+
+@media (max-width: 1180px) {
+  .hero .container { grid-template-columns: 1fr; }
+  .hero-visual { max-width: 540px; }
+  .feature-grid { grid-template-columns: repeat(2, 1fr); }
+  .process-rail { grid-template-columns: repeat(2, 1fr); row-gap: 20px; }
+  .pricing-grid { grid-template-columns: repeat(2, 1fr); }
+  .stat-grid { grid-template-columns: repeat(3, 1fr); }
+  .issues-grid { grid-template-columns: 1fr; }
+  .clean-grid { grid-template-columns: repeat(2, 1fr); }
+  .chart-grid { grid-template-columns: 1fr; }
+  .report-panel { grid-template-columns: 1fr; }
+  .health-panel { grid-template-columns: 1fr; text-align: center; }
+  .health-breakdown { justify-content: center; }
+}
+
+@media (max-width: 860px) {
+  .nav-links { display: none; }
+  .nav-toggle { display: flex; }
+
+  .app-shell { grid-template-columns: 1fr; }
+  .app-sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 200;
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+    box-shadow: var(--shadow-elev);
+  }
+  .app-sidebar.open { transform: translateX(0); }
+  .app-main { padding: 24px 18px 74px; }
+  .sidebar-open-btn { display: inline-flex !important; }
+
+  /* Performance: drop the heaviest visual effects below tablet width */
+  #heroCanvas { display: none; }
+  .cursor-dot, .cursor-ring { display: none !important; }
+  .hero { padding: 130px 0 56px; }
+}
+
+@media (max-width: 720px) {
+  .hero h1 { font-size: 38px; }
+  .container { padding: 0 20px; }
+  .feature-grid { grid-template-columns: 1fr; }
+  .process-rail { grid-template-columns: 1fr; }
+  .pricing-grid { grid-template-columns: 1fr; }
+  .stat-grid { grid-template-columns: repeat(2, 1fr); }
+  .clean-grid { grid-template-columns: 1fr; }
+  .section { padding: 68px 0; }
+  .section-head h2 { font-size: 28px; }
+  .footer .container { flex-direction: column; align-items: flex-start; }
+  .upload-demo { flex-direction: column; align-items: flex-start; }
+  .compare-slider-wrap { height: 260px; }
+  .compare-side { padding: 0 18px; }
+}
+
+@media (max-width: 860px) {
+  .sidebar-close-btn { display: inline-flex; }
+}
+
+/* Respect the OS-level reduced-data / reduced-motion signal for the
+   particle canvas + magnetic buttons even outside the strict media query
+   above — toggled by animations.js via body.no-fancy on low-end/mobile. */
+body.no-fancy #heroCanvas,
+body.no-fancy .cursor-dot,
+body.no-fancy .cursor-ring {
+  display: none !important;
+}

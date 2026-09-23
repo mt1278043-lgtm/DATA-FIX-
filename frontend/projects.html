@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Projects — DataFix AI</title>
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/animations.css" />
+<link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+<nav class="navbar scrolled">
+  <div class="container">
+    <a href="index.html" class="brand"><span class="logo-wrap"><img src="assets/logo.svg" width="28" height="28" alt="" /></span> DataFix AI</a>
+    <div class="nav-actions">
+      <span class="mono" id="whoami" style="opacity:.7;margin-right:12px;"></span>
+      <button class="btn btn-ghost btn-sm" id="logoutBtn">Log out</button>
+    </div>
+  </div>
+</nav>
+
+<div class="container" style="padding:120px 24px 80px;">
+  <div class="section-head">
+    <h2>Your Projects</h2>
+    <p>Real projects, persisted server-side — each one holds its own datasets, cleaning history, experiments and models.</p>
+  </div>
+
+  <div class="panel glass" style="margin-bottom:28px;">
+    <div class="panel-head"><h3>New project</h3></div>
+    <form id="newProjectForm" style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;">
+      <div style="flex:1;min-width:200px;">
+        <label class="mono" style="font-size:12px;opacity:.7;">Name</label>
+        <input type="text" class="search-input" id="npName" required style="width:100%;" />
+      </div>
+      <div style="flex:2;min-width:260px;">
+        <label class="mono" style="font-size:12px;opacity:.7;">Description (optional)</label>
+        <input type="text" class="search-input" id="npDesc" style="width:100%;" />
+      </div>
+      <button type="submit" class="btn btn-primary">Create project</button>
+    </form>
+  </div>
+
+  <div id="projectsGrid" class="feature-grid"></div>
+  <div id="emptyProjects" class="empty-state glass" style="display:none;">
+    <h3>No projects yet</h3>
+    <p>Create your first project above to upload a dataset and start analyzing.</p>
+  </div>
+</div>
+
+<script src="js/api.js"></script>
+<script>
+requireAuth();
+
+async function init() {
+  try {
+    const me = await DataFixAPI.me();
+    document.getElementById('whoami').textContent = me.email;
+  } catch { DataFixAPI.clearToken(); window.location.href = 'login.html'; return; }
+  await loadProjects();
+}
+
+async function loadProjects() {
+  const grid = document.getElementById('projectsGrid');
+  const empty = document.getElementById('emptyProjects');
+  grid.innerHTML = '';
+  const projects = await DataFixAPI.listProjects();
+  if (!projects.length) { empty.style.display = ''; return; }
+  empty.style.display = 'none';
+  for (const p of projects) {
+    const card = document.createElement('div');
+    card.className = 'feature-card glass';
+    card.innerHTML = `
+      <div class="feature-icon"><i class="fa-solid fa-folder-open"></i></div>
+      <h3>${escapeHtml(p.name)}</h3>
+      <p>${escapeHtml(p.description || 'No description')}</p>
+      <div class="mono" style="font-size:12px;opacity:.65;margin:8px 0 14px;">
+        ${p.n_datasets} dataset${p.n_datasets===1?'':'s'} · ${p.n_models} model${p.n_models===1?'':'s'} · ${p.n_experiments} experiment${p.n_experiments===1?'':'s'}
+      </div>
+      <div style="display:flex;gap:8px;">
+        <a class="btn btn-primary btn-sm" href="workspace.html?project=${p.id}">Open</a>
+        <button class="btn btn-ghost btn-sm delete-btn" data-id="${p.id}">Delete</button>
+      </div>`;
+    grid.appendChild(card);
+  }
+  grid.querySelectorAll('.delete-btn').forEach(btn => {
+    btn.onclick = async () => {
+      if (!confirm('Delete this project and everything in it? This cannot be undone.')) return;
+      await DataFixAPI.deleteProject(btn.dataset.id);
+      loadProjects();
+    };
+  });
+}
+
+function escapeHtml(s) {
+  const d = document.createElement('div');
+  d.textContent = s == null ? '' : String(s);
+  return d.innerHTML;
+}
+
+document.getElementById('newProjectForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const name = document.getElementById('npName').value.trim();
+  const desc = document.getElementById('npDesc').value.trim();
+  if (!name) return;
+  const project = await DataFixAPI.createProject(name, desc);
+  document.getElementById('npName').value = '';
+  document.getElementById('npDesc').value = '';
+  window.location.href = `workspace.html?project=${project.id}`;
+});
+
+document.getElementById('logoutBtn').onclick = () => { DataFixAPI.clearToken(); window.location.href = 'login.html'; };
+
+init();
+</script>
+</body>
+</html>

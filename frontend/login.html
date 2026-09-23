@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sign in — DataFix AI</title>
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/animations.css" />
+<link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+<nav class="navbar scrolled">
+  <div class="container">
+    <a href="index.html" class="brand"><span class="logo-wrap"><img src="assets/logo.svg" width="28" height="28" alt="" /></span> DataFix AI</a>
+  </div>
+</nav>
+
+<div class="container" style="padding:120px 24px 80px; max-width:440px;">
+  <div class="glass panel" style="padding:32px;">
+    <div style="display:flex;gap:8px;margin-bottom:20px;">
+      <button class="btn btn-secondary btn-sm" id="tabLogin" style="flex:1;">Sign in</button>
+      <button class="btn btn-ghost btn-sm" id="tabRegister" style="flex:1;">Create account</button>
+    </div>
+
+    <form id="loginForm">
+      <div class="pred-field-row">
+        <label>Email</label>
+        <input type="email" class="search-input" id="loginEmail" required style="width:100%;margin-bottom:12px;" />
+      </div>
+      <div class="pred-field-row">
+        <label>Password</label>
+        <input type="password" class="search-input" id="loginPassword" required style="width:100%;margin-bottom:16px;" />
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+    </form>
+
+    <form id="registerForm" style="display:none;">
+      <div class="pred-field-row">
+        <label>Name</label>
+        <input type="text" class="search-input" id="regName" style="width:100%;margin-bottom:12px;" />
+      </div>
+      <div class="pred-field-row">
+        <label>Email</label>
+        <input type="email" class="search-input" id="regEmail" required style="width:100%;margin-bottom:12px;" />
+      </div>
+      <div class="pred-field-row">
+        <label>Password (min 6 characters)</label>
+        <input type="password" class="search-input" id="regPassword" required minlength="6" style="width:100%;margin-bottom:16px;" />
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">Create account</button>
+    </form>
+
+    <p id="authError" class="upload-error" style="display:none;margin-top:14px;"></p>
+    <p class="mono" style="margin-top:16px;font-size:12px;opacity:.6;">Backend: <span id="apiBaseLabel"></span> — <a href="#" id="changeApiBase">change</a></p>
+  </div>
+</div>
+
+<script src="js/api.js"></script>
+<script>
+document.getElementById('apiBaseLabel').textContent = DataFixAPI.base;
+document.getElementById('changeApiBase').onclick = (e) => {
+  e.preventDefault();
+  const v = prompt('Backend API base URL (e.g. http://127.0.0.1:8010):', DataFixAPI.base);
+  if (v) { localStorage.setItem('df_api_base', v); location.reload(); }
+};
+
+const tabLogin = document.getElementById('tabLogin');
+const tabRegister = document.getElementById('tabRegister');
+const loginForm = document.getElementById('loginForm');
+const registerForm = document.getElementById('registerForm');
+const errEl = document.getElementById('authError');
+
+tabLogin.onclick = () => { tabLogin.className = 'btn btn-secondary btn-sm'; tabRegister.className = 'btn btn-ghost btn-sm'; loginForm.style.display = ''; registerForm.style.display = 'none'; };
+tabRegister.onclick = () => { tabRegister.className = 'btn btn-secondary btn-sm'; tabLogin.className = 'btn btn-ghost btn-sm'; registerForm.style.display = ''; loginForm.style.display = 'none'; };
+
+function showError(msg) { errEl.textContent = msg; errEl.style.display = ''; }
+
+loginForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  errEl.style.display = 'none';
+  try {
+    const data = await DataFixAPI.login(document.getElementById('loginEmail').value, document.getElementById('loginPassword').value);
+    DataFixAPI.setToken(data.access_token);
+    window.location.href = 'projects.html';
+  } catch (err) { showError(err.message); }
+});
+
+registerForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  errEl.style.display = 'none';
+  try {
+    const data = await DataFixAPI.register(document.getElementById('regEmail').value, document.getElementById('regPassword').value, document.getElementById('regName').value);
+    DataFixAPI.setToken(data.access_token);
+    window.location.href = 'projects.html';
+  } catch (err) { showError(err.message); }
+});
+
+if (DataFixAPI.isLoggedIn()) window.location.href = 'projects.html';
+</script>
+</body>
+</html>

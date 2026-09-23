@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Workspace — DataFix AI</title>
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/animations.css" />
+<link rel="stylesheet" href="css/responsive.css" />
+<script src="js/chart.umd.min.js"></script>
+</head>
+<body>
+
+<div class="app-shell" id="appShell">
+  <aside class="app-sidebar" id="appSidebar">
+    <div style="display:flex;align-items:center;justify-content:space-between;">
+      <a href="projects.html" class="brand"><span class="logo-wrap"><img src="assets/logo.svg" width="26" height="26" alt="" /></span> DataFix AI</a>
+      <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close menu"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a href="#" class="sidebar-link active" data-view="overview"><i class="fa-solid fa-gauge-high"></i> Overview</a>
+      <a href="#" class="sidebar-link" data-view="datasets"><i class="fa-solid fa-database"></i> Datasets</a>
+      <a href="#" class="sidebar-link" data-view="quality"><i class="fa-solid fa-triangle-exclamation"></i> Data Quality</a>
+      <a href="#" class="sidebar-link" data-view="cleaning"><i class="fa-solid fa-broom"></i> Cleaning Studio</a>
+      <a href="#" class="sidebar-link" data-view="eda"><i class="fa-solid fa-chart-pie"></i> EDA &amp; Visualization</a>
+      <a href="#" class="sidebar-link" data-view="sql"><i class="fa-solid fa-terminal"></i> SQL Studio</a>
+      <a href="#" class="sidebar-link" data-view="features"><i class="fa-solid fa-flask"></i> Feature Engineering</a>
+      <a href="#" class="sidebar-link" data-view="automl"><i class="fa-solid fa-brain"></i> AutoML &amp; Prediction</a>
+      <a href="#" class="sidebar-link" data-view="activity"><i class="fa-solid fa-clock-rotate-left"></i> Activity</a>
+    </nav>
+
+    <div class="sidebar-foot">
+      <div class="sidebar-dataset">
+        <div class="name" id="projectNameSidebar">—</div>
+        <div class="meta" id="datasetMetaSidebar">No dataset selected</div>
+      </div>
+      <select class="select-control" id="datasetSwitcher" style="width:100%;margin-top:8px;"></select>
+    </div>
+  </aside>
+
+  <main class="app-main" id="appMain">
+    <div class="app-topbar">
+      <div style="display:flex;align-items:center;gap:14px;">
+        <button class="sidebar-open-btn" id="sidebarOpenBtn" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+        <div>
+          <h1 id="topbarTitle">Overview</h1>
+          <div class="sub" id="topbarSub">Real, computed data — nothing on this page is fabricated.</div>
+        </div>
+      </div>
+    </div>
+
+    <section class="view active" id="view-overview"></section>
+    <section class="view" id="view-datasets"></section>
+    <section class="view" id="view-quality"></section>
+    <section class="view" id="view-cleaning"></section>
+    <section class="view" id="view-eda"></section>
+    <section class="view" id="view-sql"></section>
+    <section class="view" id="view-features"></section>
+    <section class="view" id="view-automl"></section>
+    <section class="view" id="view-activity"></section>
+  </main>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/workspace.js"></script>
+</body>
+</html>
